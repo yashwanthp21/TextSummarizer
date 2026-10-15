@@ -16,7 +16,10 @@ def Index():
 def Summarize():
     if request.method== "POST":
         API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
-        headers = {"Authorization": "Bearer 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"}
+        token = os.environ.get("HF_TOKEN")
+        if not token:
+            return "Set the HF_TOKEN environment variable before requesting a summary.", 503
+        headers = {"Authorization": f"Bearer {token}"}
 
         data=request.form["data"]
 
